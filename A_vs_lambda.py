@@ -1,9 +1,9 @@
 #!/usr/bin/env python
  
 import re,sys,string,math,os,types,shutil
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/tools')
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/LESPEC')
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS'])
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/tools')
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/LESPEC')
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS'])
 from texttable import txttableclass
 from lightechoprocs import *
 from sb import CCMextinctionA

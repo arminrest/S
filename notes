@@ -1,4 +1,7 @@
- plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t*r_t*r_t),w4000n_rrr,w6000n_rrr,w8000n_rrr' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
+export DUST_ROOTDIR='./dustdata'
+
+---------------
+plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t*r_t*r_t),w4000n_rrr,w6000n_rrr,w8000n_rrr' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
 plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t*r_t),w4000n_rr,w6000n_rr,w8000n_rr' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
 plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t),w4000n_r,w6000n_r,w8000n_r' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
 

@@ -1,21 +1,57 @@
 #!/usr/bin/env python
  
 import re,sys,string,math,os,types,shutil
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/tools')
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/LESPEC')
-sys.path.append(os.environ['PIPE_PYTHONSCRIPTS'])
-from texttable import txttableclass
-from pipeclasses import paramfileclass
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/tools')
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS']+'/LESPEC')
+#sys.path.append(os.environ['PIPE_PYTHONSCRIPTS'])
+from texttable import txttableclass,paramfileclass
+#from pipeclasses import paramfileclass
 import optparse
 #import matplotlib
 #matplotlib.use('GTKAgg')
 #matplotlib.use('Agg')
 from lightechoprocs import *
 import pylab
-from tools import rmfile,makepath4file
+#from tools import rmfile,makepath4file
 import numpy as np
 from scipy import interpolate
 
+def rmfile(filename,raiseError=1,gzip=False):
+    " if file exists, remove it "
+    if os.path.lexists(filename):
+        os.remove(filename)
+        if os.path.isfile(filename):
+            if raiseError == 1:
+                raise RuntimeError('ERROR: Cannot remove %s' % filename)
+            else:
+                return(1)
+    if gzip and os.path.lexists(filename+'.gz'):
+        os.remove(filename+'.gz')
+        if os.path.isfile(filename+'.gz'):
+            if raiseError == 1:
+                raise RuntimeError('ERROR: Cannot remove %s' % filename+'.gz')
+            else:
+                return(2)
+    return(0)
+
+def makepath(path,raiseError=1):
+    if path == '':
+        return(0)
+    if not os.path.isdir(path):
+        os.makedirs(path)
+        if not os.path.isdir(path):
+            if raiseError == 1:
+                raise RuntimeError('ERROR: Cannot create directory %s' % path)
+            else:
+                return(1)
+    return(0)
+
+def makepath4file(filename,raiseError=1):
+    path = os.path.dirname(filename)
+    if not os.path.isdir(path):
+        return(makepath(path,raiseError=raiseError))
+    else:
+        return(0)
 
 # LMC/SMC extinction law
 # MCextinctionA = <A(lambda)/A(V)> * R_V * E(B-V)
