@@ -1,0 +1,113 @@
+f(a):
+
+Mathis, Rumpel, & Nordsieck 1977 found that 
+dn_gr = C n_H a^-3.5 da, a_min < a < a_max, a_min = 50A, a_max = 0.25 um
+
+Weingartner, J.C., & Draine, B.T. 2001, "Dust Grain Size Distributions and Extinction in the Milky Way, LMC, and SMC, Astrophys. J. 548, 296-309
+ftp://ftp.astro.princeton.edu/draine/papers/pdf/ApJ_548_296.pdf
+
+expand this. Equation 2-6 define a functional form of 1/n_H dn_gr/da
+
+f(a) = 1/n_H dn_gr/da has the units of 1/length!
+
+The different models for MWG, and LMC are different in the b_C value
+		10^5 b_c
+MWG, R_V=3.1	6.0		Table 1
+MWG, R_V=4.0	4.0		Table 1
+MWG, R_V=5.5	3.0		Table 1
+LMCavg		2.0		Table 3
+LMC2		1.0		Table 3
+
+This gives two independent density distribution, one for carbonaceous
+dust, and one for silicate dust. Plugging in the 
+
+carbonaceous dust: The smallest carbonaceous grains have the
+optical and physical properties of PAH (polycyclic aromatic
+hydrocarbon) molecules. The larger (a > 100 Angstrom) carbonaceous
+grains are assumed to have the optical properties of graphite spheres
+
+Graphite:
+http://www.astro.princeton.edu/~draine/dust/dust.diel.html
+Go to Grpahite 
+
+PAH:
+http://www.astro.princeton.edu/~draine/dust/dust.diel.html
+go to 
+PAH can be neutral or ionized! 
+ftp://ftp.astro.princeton.edu/draine/dust/mix/kext_albedo_WD_LMCavg_20
+"The PAH/graphitic grains in the log-normal size distributions are
+assumed to be 50% neutral and 50% ionized.  The PAH/graphitic grains
+in the size distribution given by eq. (5,6) of Weingartner & Draine
+(2001) are assumed to be 100% ionized."
+
+So both files need to be used?
+Yes! However, for g and Q_sca, ion and neu are the same, so technically
+it is not necessary, but we do it anyway.
+
+THe dust grain distribution can be calculated with
+photpipe/pythonscripts/SM/dustgrains.py
+
+example:
+ dustgrains.py MWG_A 6.0 --RV 3.1 --showplot
+
+-----------------------------------------------------------------------
+
+tables for Q_SC, Q_abs, and g for different grain sizes, wavelengths and
+grain types are in
+
+http://www.astro.princeton.edu/~draine/dust/dust.diel.html
+The following files are available:
+
+PAH-Carbonaceous Grains (Li & Draine 2001)
+Graphite (Draine & Lee 1984; Laor & Draine 1993): 
+Original Astronomical Silicate (Draine & Lee 1984; Laor & Draine 1993):
+Smoothed UV Astronomical Silicate (Draine & Lee 1984; Laor & Draine 1993; Weingartner & Draine 2000):
+
+Li, A., & Draine, B.T. 2001, "Infrared Emission from Interstellar Dust. II. The Diffuse Interstellar Medium", Astrophys. J., 554, 778-802
+ftp://ftp.astro.princeton.edu/draine/papers/pdf/ApJ_554_778.pdf
+
+Weingartner, J.C., & Draine, B.T. 2001, "Dust Grain Size Distributions and Extinction in the Milky Way, LMC, and SMC, Astrophys. J. 548, 296-309
+ftp://ftp.astro.princeton.edu/draine/papers/pdf/ApJ_548_296.pdf
+
+
+in 
+papers/lightechos/spectrainfo/spectrafit/dustdata/draine
+Gra_81, PAHion_30, PAHneu_30, suvSil_81
+mktable.pl converts these files into 2-dimensional tables
+
+for carbonaceous grains, PAH is used for a<=10^-3, and Gra for a>10^-3
+
+It looks like Q_sca and g are identical for PAH_neu, PAH_ion, only the 
+Q_abs are different.
+
+
+dust.py reads these tables, and calculates S:
+To test it:
+dusttest.py carb_ion MWG_A 6.0 --RV 3.1 --ion2neutral 1.0 --showplot
+set ioinized to neutral PAH to 1.0, then 
+Weingartner & Draine, 2001, ApJ 548, 296, Figure 9, lower left panel, thick solid line
+
+dust.py is used by mkdustS.py to make the S matrix.
+S=S_carb_ion + S_carb_ion + S_silicate
+
+mkdustS.py MWG_A 6.0 --RV 3.1 --ion2neutral 1.0 --showplot --lambdarange 4000,8000,100.0 --thetarange 0.0,30,30
+
+This is the one for the LMC light echoes...
+mkdustS.py LMCavg 2.0 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+
+mkdustS.py LMC2   1.0 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+mkdustS.py SMC    0.0 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+mkdustS.py MWG_A  6.0 --RV 3.1 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+mkdustS.py MWG_A  4.0 --RV 4.0 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+mkdustS.py MWG_A  3.0 --RV 5.5 --ion2neutral 0.5 --lambdarange 4000,8000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+
+mkdustS.py MWG_A  6.0 --RV 3.1 --ion2neutral 0.5 --lambdarange 3500,10000,5.0 --thetarange 0.0,180.0,1.0 --savefile
+
+# B. E. K. Sugerman, AJ, 126, 1939, equation 3
+-----------------------------------------------------------------------
+
+Formula for extinction:
+Weingartner, J.C., & Draine, B.T. 2001, "Dust Grain Size Distributions and Extinction in the Milky Way, LMC, and SMC, Astrophys. J. 548, 296-309
+ftp://ftp.astro.princeton.edu/draine/papers/pdf/ApJ_548_296.pdf
+
+equation 7
