@@ -1,0 +1,24 @@
+ plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t*r_t*r_t),w4000n_rrr,w6000n_rrr,w8000n_rrr' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
+plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t*r_t),w4000n_rr,w6000n_rr,w8000n_rr' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
+plotit.py S_vs_theta -x theta -y 'w4000n,w6000n,w8000n,1/(r_t),w4000n_r,w6000n_r,w8000n_r' -f 'r-,r--,r:,k-,b-,b--,b:' --ymax 5
+
+plotit.py S_vs_theta.txt -x theta -y 'Sn_LMCavg_4000,Sn_LMCavg_6000,Sn_LMCavg_7999,Sn_SMCbar_4000,Sn_SMCbar_6000,Sn_SMCbar_7999,Sn_MWG_4000,Sn_MWG_6000,Sn_MWG_7999' -f 'k-,k--,k:,b-,b--,b:,r-,r--,r:'
+plotit.py S_vs_theta.txt -x theta -y 'Sn_MWG_4000,Sn_MWG_6000,Sn_MWG_7999,Sn_LMCavg_4000,Sn_LMCavg_6000,Sn_LMCavg_7999,Sn_SMCbar_4000,Sn_SMCbar_6000,Sn_SMCbar_7999' -f 'b-,g-,r-,b--,g--,r--,b:,g:,r:' --ymax 20
+plotit.py S_vs_theta.txt -x theta -y 'Sn_MWG_4000,Sn_MWG_6000,Sn_MWG_7999,Sn_LMCavg_4000,Sn_LMCavg_6000,Sn_LMCavg_7999,Sn_SMCbar_4000,Sn_SMCbar_6000,Sn_SMCbar_7999' -f 'b-,g-,r-,b--,g--,r--,b:,g:,r:' --ymax 50 --logy
+plotit.py S_vs_theta.txt -x theta -y 'Sn_MWG_4000,Sn_MWG_6000,Sn_MWG_7999,Sn_LMCavg_4000,Sn_LMCavg_6000,Sn_LMCavg_7999,Sn_SMCbar_4000,Sn_SMCbar_6000,Sn_SMCbar_7999' -f 'b-,g-,r-,b--,g--,r--,b:,g:,r:' --ymax 50 --logy --xlabel '$\theta$' --ylabel '$S(\lambda\,\theta)/S(6000\A\,\theta)$'   
+
+plotit.py S_vs_lambda.txt  -x wave -y 'Sn_MWG_40,Sn_LMCavg_40,Sn_SMCbar_40' -s
+plotit.py S_vs_lambda.txt  -x wave -y 'Sn_MWG_15,Sn_LMCavg_15,Sn_SMCbar_15,Sn_MWG_130,Sn_LMCavg_130,Sn_SMCbar_130' -s -f 'k-,k--,k:,r-,r--,r:' --xmin 4000.1 --xmax 7999.9
+plotit.py S_vs_lambda.txt  -x wave -y 'Sn_MWG_20,Sn_LMCavg_20,Sn_SMCbar_20,Sn_MWG_130,Sn_LMCavg_130,Sn_SMCbar_130' -s -f 'k-,k--,k:,r-,r--,r:' --xmin 4000.1 --xmax 7999.9
+plotit.py S_vs_lambda.txt  -x wave -y 'Sn_MWG_150,Sn_LMCavg_150,Sn_SMCbar_150,Sn_MWG_90,Sn_LMCavg_90,Sn_SMCbar_90,Sn_MWG_20,Sn_LMCavg_20,Sn_SMCbar_20' -s -f 'k-,k--,k:,b-,b--,b:,r-,r--,r:' --xmin 4000.1 --xmax 7999.9
+plotit.py S_vs_lambda.txt  -x wave -y 'Sn_MWG_150,Sn_LMCavg_150,Sn_SMCbar_150,Sn_MWG_60,Sn_LMCavg_60,Sn_SMCbar_60,Sn_MWG_20,Sn_LMCavg_20,Sn_SMCbar_20' -s -f 'k-,k--,k:,b-,b--,b:,r-,r--,r:' --xmin 4000.1 --xmax 7999.9
+
+
+S vs theta plot:
+ plotit.py --lw 2 --savefile S_vs_theta.pdf S_vs_theta.txt --xmin 0.1 --xmax 179 -x theta -y 'Sn_MWG_4000,Sn_MWG_6000,Sn_MWG_7999,Sn_LMCavg_4000,Sn_LMCavg_6000,Sn_LMCavg_7999,Sn_SMCbar_4000,Sn_SMCbar_6000,Sn_SMCbar_7999' -f 'b-,g-,r-,b--,g--,r--,b:,g:,r:' --ymax 50 --logy --xlabel '$\theta$ in degrees' --ylabel '$S(\lambda,\theta)/S(\lambda,90^o)$' -l 'MWG\,$\ \lambda=4000\AA$,MWG\,$\ \lambda=6000\AA$,MWG\,$\ \lambda=8000\AA$,LMC avg\,$\ \lambda=4000\AA$,LMC avg\,$\ \lambda=6000\AA$,LMC avg\,$\ \lambda=8000\AA$,SMC bar\,$\ \lambda=4000\AA$,SMC bar\,$\ \lambda=6000\AA$,SMC bar\,$\ \lambda=8000\AA$' --major_ticks_x_fontsize 14 --major_ticks_y_fontsize 14 --labelfontsize 14 --layout_left 0.12 --layout_right 0.98 --layout_top 0.98 --layout_bottom 0.09  --minor_ticks_x 5 --color 'CBblue,CBbluegreen,CBred,CBblue,CBbluegreen,CBred,CBblue,CBbluegreen,CBred'
+
+S vs wavelength plot:
+plot_S_vs_lambda.py --savefile  S_vs_lambda.pdf --figsize 8,8 S_vs_lambda.txt --lw 2 -x wave -y 'Sn_MWG_20,Sn_LMCavg_20,Sn_SMCbar_20,Sn_MWG_60,Sn_LMCavg_60,Sn_SMCbar_60,Sn_MWG_150,Sn_LMCavg_150,Sn_SMCbar_150' -s -f 'k-,k--,k:,b-,b--,b:,r-,r--,r:' --xmin 4000.1 --xmax 7999.9 --ymin 0.01 --ymax 3.99 --color 'CBblue,CBblue,CBblue,CBbluegreen,CBbluegreen,CBbluegreen,CBred,CBred,CBred'  --xlabel '$\lambda$ in $\AA$' --ylabel '$S(\lambda,\theta)/S(8000\AA,\theta)$' --major_ticks_x_fontsize 14 --major_ticks_y_fontsize 14 --labelfontsize 14 --layout_left 0.12 --layout_right 0.98 --layout_top 0.98 --layout_bottom 0.09  --minor_ticks_x 100  -l 'MWG\,$\ \theta=20^o$,LMC avg\,$\ \theta=20^o$,SMC bar\,$\ \theta=20^o$,MWG\,$\ \theta=60^o$,LMC avg\,$\ \theta=60^o$,SMC bar\,$\ \theta=60^o$,MWG\,$\ \theta=150^o$,LMC avg\,$\ \theta=150^o$,SMC bar\,$\ \theta=150^o$' --legendlabelspacing 0.0 --legendfontsize 12
+
+Extinction A:
+plotit.py A_vs_lambda.txt -x wave -y A_Rv2.0,A_Rv3.1,A_Rv5.5 &
