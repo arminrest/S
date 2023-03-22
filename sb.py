@@ -77,7 +77,7 @@ class MCextinctionclass:
             # Table 2
             self.Rv = 3.96
         else:
-            raise RuntimeError,'dust model %s is not defined!' % dustmodel
+            raise RuntimeError('dust model %s is not defined!' % dustmodel)
             
     def Ax_AV(self,x):
         # Gordon, CLayton, Misselt, Landoldt, Wolff 2003, equation 5
@@ -128,7 +128,7 @@ def CCMextinctionA(lambdaval,Rv,EBmV):
             a = 1.752 - 0.316*inverselambda - 0.104/(math.pow(inverselambda-4.67,2) + 0.341) - 0.04473*math.pow(inverselambda-5.9,2) - 0.009779*math.pow(inverselambda-5.9,3)
             b = -3.090 + 1.825*inverselambda + 1.206/(math.pow(inverselambda-4.62,2) + 0.263) + 0.2130*math.pow(inverselambda-5.9,2)  + 0.1207*math.pow(inverselambda-5.9,3)
     else:
-        raise RuntimeError,'inverse lambda out of range: %f (lambda = %f)' % (inverselambda,lambdaval)
+        raise RuntimeError('inverse lambda out of range: %f (lambda = %f)' % (inverselambda,lambdaval))
     aratio = a + b/Rv;
     return(EBmV * Rv * aratio)
     
@@ -141,7 +141,7 @@ class S_tableclass:
         self.normfactor=1.0
         
     def loadtable(self,filename):
-        print 'Loading ',filename
+        print('Loading ',filename)
         lines = open(filename,'r').readlines()
         
         lambdarange = None
@@ -156,10 +156,10 @@ class S_tableclass:
         for line in lines:
             if not re.match('\#',line):
                 if lambdarange == None or thetarange == None:
-                    print 'ERROR: Could not determine lambdarange or thetarange!'
+                    print('ERROR: Could not determine lambdarange or thetarange!')
                     sys.exit(0)
                 if self.lambda_A == None:
-                    print 'ERROR: Could not determine lambda!'
+                    print('ERROR: Could not determine lambda!')
                     sys.exit(0)
                 linedummy = re.sub('^\s+|\s+$','',line,count=2)
                 Stmp = re.split('\s+',linedummy)
@@ -167,14 +167,14 @@ class S_tableclass:
                 self.theta_deg.append(Stmp[0]) # the first column is theta
                 self.S.append(Stmp[1:])        # the rest is S
                 if len(self.S[thetacounter]) != len(self.lambda_A):
-                    print 'Bug! inconsistent number of S vals (%d!=%d) in data line %d' % (len(self.S[thetacounter]),len(self.lambda_A),thetacounter)
+                    print('Bug! inconsistent number of S vals (%d!=%d) in data line %d' % (len(self.S[thetacounter]),len(self.lambda_A),thetacounter))
                     sys.exit(0)                                                    
                 thetacounter+=1
             elif re.match('^\#lambdarange:\s*',line):
                 linedummy = re.sub('^\#lambdarange:\s*|\s+$','',line,count=2)
                 lambdarange = re.split('\s+',linedummy)
                 if len(lambdarange) != 3:
-                    print 'ERROR! expecting three values for lambdarange!',lambdarange
+                    print('ERROR! expecting three values for lambdarange!',lambdarange)
                     sys.exit(0)                                                    
                 self.lambdamin  = float(lambdarange[0])
                 self.lambdamax  = float(lambdarange[1])
@@ -183,7 +183,7 @@ class S_tableclass:
                 linedummy = re.sub('^\#thetarange:\s*|\s+$','',line,count=2)
                 thetarange = re.split('\s+',linedummy)
                 if len(thetarange) != 3:
-                    print 'ERROR! expecting three values for thetarange!',thetarange
+                    print('ERROR! expecting three values for thetarange!',thetarange)
                     sys.exit(0)                                                    
                 self.thetamin  = float(thetarange[0])
                 self.thetamax  = float(thetarange[1])
@@ -194,31 +194,31 @@ class S_tableclass:
                 self.lambda_A = [float(x) for x in self.lambda_A] # convert to float
                
         if len(self.lambda_A) != int((self.lambdamax-self.lambdamin)/self.lambdastep+1.0):
-            print 'Bug! number of lambdas inconsistent with range! %d != %d\n' % (len(self.lambda_A),int((self.lambdamax-self.lambdamin)/self.lambdastep+1.0))
+            print('Bug! number of lambdas inconsistent with range! %d != %d\n' % (len(self.lambda_A),int((self.lambdamax-self.lambdamin)/self.lambdastep+1.0)))
             sys.exit(0)
 
     def norm1(self,thetaval,lambdaval):
         Sval = self.S_cm2(thetaval,lambdaval,normfactor=1.0)* 1E22
         self.normfactor = 1.0/Sval
-        print 'Setting normalization factor of scattering S to %f' % (self.normfactor)
+        print('Setting normalization factor of scattering S to %f' % (self.normfactor))
 
     def S_cm2(self,thetaval,lambdaval,normfactor=None):
         thetaindex  = int((thetaval - self.thetamin)/self.thetastep)
         if thetaindex<0 or thetaindex>=len(self.theta_deg)-1:
-            print 'ERROR! theta %f out of range! index = %d' % (thetaval,thetaindex)
+            print('ERROR! theta %f out of range! index = %d' % (thetaval,thetaindex))
             sys.exit(0)                                                    
         
         if (thetaval<self.theta_deg[thetaindex] or thetaval>=self.theta_deg[thetaindex+1]):
-            print 'ERROR! theta %f not between theta %f and %f' % (thetaval,self.theta_deg[thetaindex],self.theta_deg[thetaindex+1])
+            print('ERROR! theta %f not between theta %f and %f' % (thetaval,self.theta_deg[thetaindex],self.theta_deg[thetaindex+1]))
             sys.exit(0)
 
         lambdaindex = int((lambdaval - self.lambdamin)/self.lambdastep)
         if lambdaindex<0 or lambdaindex>=len(self.lambda_A)-1:
-            print 'ERROR! lambda %f out of range! index = %d' % (lambdaval,lambdaindex)
+            print('ERROR! lambda %f out of range! index = %d' % (lambdaval,lambdaindex))
             sys.exit(0)
 
         if (lambdaval<self.lambda_A[lambdaindex] or lambdaval>=self.lambda_A[lambdaindex+1]):
-            print 'ERROR! lambda %f not between lambda %f and %f' % (lambdaval,self.lambda_A[lambdaindex],self.lambda_A[lambdaindex+1])
+            print('ERROR! lambda %f not between lambda %f and %f' % (lambdaval,self.lambda_A[lambdaindex],self.lambda_A[lambdaindex+1]))
             sys.exit(0)
 
         # calculated the weighted mean of the 4 corners. The weight is 
@@ -250,17 +250,17 @@ class S_tableclass:
         elif dust == 'MWG':
             dustfilename += 'S.MWG_A.bC5.6RV3.1.dat'
         else:
-            raise RuntimeError,'dust %s not defined!' % (dust)
+            raise RuntimeError('dust %s not defined!' % (dust))
             
         if not os.path.isfile(dustfilename):
-            raise RuntimeError,'Could not find dust file %s' % (dustfilename)
+            raise RuntimeError('Could not find dust file %s' % (dustfilename))
         return(dustfilename)
 if __name__=='__main__':
 
     S_table          = S_tableclass()
 
     dustfilename = S_table.getdustfilename('MWG')
-    print 'Loading dust properties...'
+    print('Loading dust properties...')
     S_table.loadtable(dustfilename)
 
     tout = txttableclass()

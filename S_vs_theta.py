@@ -22,14 +22,14 @@ if __name__=='__main__':
     for dust in dusttypes:
         S[dust]=S_tableclass()
         dustfilename =  S[dust].getdustfilename(dust)
-        print 'Loading dust properties...'
+        print(f'Loading dust properties from {dustfilename}...')
         S[dust].loadtable(dustfilename)
         for w in ws:
             tout.configcols(['S_%s_%.0f' % (dust,w)],'f','%.3e',visible=1)    
         for w in ws:
             tout.configcols(['Sn_%s_%.0f' % (dust,w)],'f','%.3f',visible=1)    
 
-    for theta in xrange(1,180):
+    for theta in range(1,180):
         tan_theta = math.tan(theta*deg2rad)
         inverse_tan_theta = 1.0/tan_theta
         rho_t = inverse_tan_theta + math.sqrt(inverse_tan_theta**2 + 1)
@@ -48,4 +48,6 @@ if __name__=='__main__':
 
         #rho2_t = 0.5*inverse_tan_theta - math.sqrt((inverse_tan_theta**2)/4 +0.5)
         #print '%.0f %.3f %.3f' % (theta,rho_t)
-    tout.save2file('S_vs_theta.txt')
+    outfilename = 'S_vs_theta.txt'
+    print(f'Saving {outfilename}')
+    tout.save2file(outfilename)
